@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+.kartu-nama {
+    width: 350px;
+    height: 200px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+}
+.kartu-nama h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+.kartu-nama p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
+.kartu-nama .kontak {
+    margin-top: 15px;
+}
+.kartu-nama .kontak a {
+    text-decoration: none;
+    color: #007BFF;
+}
+.kartu-nama .kontak a:hover {
+    text-decoration: underline;
+}
