@@ -7,56 +7,13 @@ body {
     margin: 0;
     background-color: #f4f4f4;
 }
-.kartu-nama {
-    width: 350px;
-    height: 200px;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    box-sizing: border-box;
-}
-.kartu-nama h1 {
-    margin: 0;
-    font-size: 24px;
-    color: #333;
-}
-.kartu-nama p {
-    margin: 5px 0;
-    font-size: 16px;
-    color: #555;
-}
-.kartu-nama .kontak {
-    margin-top: 15px;
-}
-.kartu-nama .kontak a {
-    text-decoration: none;
-    color: #007BFF;
-}
-.kartu-nama .kontak a:hover {
-    text-decoration: underline;
-}.foto-profil {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f4f4f4;
-}
+
 .nametag {
     display: flex;
     align-items: center;
-    width: 400px;
-    height: 150px;
+    justify-content: space-between;
+    width: 450px;
+    height: auto;
     background: #ffffff;
     border: 2px solid #ddd;
     border-radius: 15px;
@@ -64,10 +21,12 @@ body {
     padding: 15px;
     box-sizing: border-box;
 }
+
 .foto-container {
     flex: 0 0 100px;
     margin-right: 15px;
 }
+
 .foto-profil {
     width: 100px;
     height: 100px;
@@ -75,70 +34,47 @@ body {
     object-fit: cover;
     border: 2px solid #ccc;
 }
+
 .info-container {
     flex: 1;
+    margin-right: 15px;
 }
+
 .info-container h1 {
     margin: 0;
     font-size: 20px;
     color: #333;
 }
+
 .info-container p {
     margin: 5px 0;
     font-size: 14px;
     color: #555;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f4f4f4;
+.kontak {
+    margin-top: 10px;
 }
-.nametag {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 450px;
-    height: 200px;
-    background: #ffffff;
-    border: 2px solid #ddd;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    box-sizing: border-box;
-}
-.foto-container {
-    flex: 0 0 100px;
-    margin-right: 15px;
-}
-.foto-profil {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ccc;
-}
-.info-container {
-    flex: 1;
-    margin-right: 15px;
-}
-.info-container h1 {
-    margin: 0;
-    font-size: 20px;
-    color: #333;
-}
-.info-container p {
+
+.kontak p {
     margin: 5px 0;
     font-size: 14px;
-    color: #555;
+    color: #007BFF;
 }
+
+.kontak a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+.kontak a:hover {
+    text-decoration: underline;
+}
+
 .qr-container {
     flex: 0 0 100px;
 }
+
 .qr-code {
     width: 80px;
     height: 80px;
