@@ -56,24 +56,57 @@ body {
     color: #555;
 }
 
-.kontak {
-    margin-top: 10px;
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-.kontak p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #007BFF;
+.social-icons {
+    display: flex;
+    gap: 20px;
 }
 
-.kontak a {
+.social-icons a {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
-    color: #007BFF;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    color: white;
+    font-size: 36px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.kontak a:hover {
-    text-decoration: underline;
+.social-icons a:hover {
+    transform: scale(1.2);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
 }
+
+.social-icons a:nth-child(1) {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+}
+
+.social-icons a:nth-child(2) {
+    background: linear-gradient(135deg, #4078c0, #6cc644);
+}
+
+.social-icons a:nth-child(3) {
+    background: linear-gradient(135deg, #f58529, #dd2a7b);
+}
+
+.social-icons a i {
+    display: inline-block;
+}
+
 
 .qr-container {
     flex: 0 0 100px;
