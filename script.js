@@ -13,4 +13,4 @@ onClick("instagram",myinstagram);
 function myinstagram() {
     window.open('https://instagram.com/harom_ein', 'blank');
 } 
-setInner("tex", "kotak saya:")
+setInner("tex", "kontak saya:")
