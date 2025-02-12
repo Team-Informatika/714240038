@@ -1,26 +1,28 @@
 import { renderHTML, onClick, setInner } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 
-// Render halaman home.html lalu jalankan inisialisasi
-renderHTML("content", "home.html").then(() => {
-    // Setelah home.html selesai dimuat, jalankan fungsi init
-    init();
-});
+// Render halaman home.html
+renderHTML("content", "home.html");
 
-// Fungsi inisialisasi setelah home.html dimuat
+// Tunggu hingga elemen "modal" tersedia sebelum menjalankan script utama
+const checkInterval = setInterval(() => {
+    if (document.getElementById("modal")) {
+        clearInterval(checkInterval); // Hentikan pengecekan setelah elemen ditemukan
+        init(); // Jalankan fungsi inisialisasi
+    }
+}, 100); // Periksa setiap 100ms
+
+// Fungsi inisialisasi setelah home.html termuat
 function init() {
     // Ambil data dari JSON
     getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
 
     // Event listener modal (harus setelah home.html termuat)
-    const modal = document.getElementById("modal");
-    if (modal) {
-        modal.addEventListener("click", function (event) {
-            if (event.target === this) {
-                this.classList.remove("active");
-            }
-        });
-    }
+    document.getElementById("modal").addEventListener("click", function (event) {
+        if (event.target === this) {
+            this.classList.remove("active");
+        }
+    });
 }
 
 // Fungsi untuk menangani data dari JSON
