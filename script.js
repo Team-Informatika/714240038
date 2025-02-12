@@ -2,11 +2,16 @@ import { renderHTML, onClick, setInner } from "https://cdn.jsdelivr.net/gh/jscro
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 
 // Render halaman home.html
-renderHTML("content", "home.html");
+renderHTML("pengganti dirinya", "home.html");
 
-// Tunggu hingga elemen "modal" tersedia sebelum menjalankan script utama
+// Tunggu hingga elemen dalam home.html termuat sebelum menjalankan script utama
 const checkInterval = setInterval(() => {
-    if (document.getElementById("modal")) {
+    const modal = document.getElementById("modal");
+    const githubBtn = document.getElementById("github");
+    const whatsappBtn = document.getElementById("whatsapp");
+    const instagramBtn = document.getElementById("instagram");
+
+    if (modal && githubBtn && whatsappBtn && instagramBtn) {
         clearInterval(checkInterval); // Hentikan pengecekan setelah elemen ditemukan
         init(); // Jalankan fungsi inisialisasi
     }
@@ -17,12 +22,19 @@ function init() {
     // Ambil data dari JSON
     getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
 
-    // Event listener modal (harus setelah home.html termuat)
+    // Event listener modal
     document.getElementById("modal").addEventListener("click", function (event) {
         if (event.target === this) {
             this.classList.remove("active");
         }
     });
+
+    // Event listeners untuk tombol sosial media
+    onClick("github", () => window.open('https://github.com/nawal886', '_blank'));
+    onClick("whatsapp", () => window.open('https://wa.me/62895350871030', '_blank'));
+    onClick("instagram", () => window.open('https://instagram.com/harom_ein', '_blank'));
+
+    setInner("tex", "Kontak saya:");
 }
 
 // Fungsi untuk menangani data dari JSON
@@ -71,10 +83,3 @@ window.openModal = function (src) {
         modal.classList.add("active");
     }
 };
-
-// Event listeners untuk social media
-onClick("github", () => window.open('https://github.com/nawal886', '_blank'));
-onClick("whatsapp", () => window.open('https://wa.me/62895350871030', '_blank'));
-onClick("instagram", () => window.open('https://instagram.com/harom_ein', '_blank'));
-
-setInner("tex", "Kontak saya:");
