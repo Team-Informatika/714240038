@@ -1,13 +1,19 @@
 import { renderHTML } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 
-// Render halaman home.html ke dalam div dengan id="penggantidirinya"
-renderHTML("penggantidirinya", "home.html").then(() => {
+// Fungsi untuk inisialisasi
+async function init() {
+    // Tunggu hingga home.html selesai dimuat
+    await renderHTML("penggantidirinya", "home.html");
+
     console.log("home.html berhasil dimuat!");
 
-    // Ambil data JSON setelah home.html selesai dimuat
-    getJSON("nawal.json", null, null, responseFunction);
-});
+    // Setelah home.html dimuat, ambil data JSON
+    getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
+}
+
+// Panggil fungsi init()
+init();
 
 // Fungsi untuk menangani data dari JSON
 function responseFunction(response) {
