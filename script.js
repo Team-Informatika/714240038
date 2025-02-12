@@ -3,11 +3,13 @@ import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 
 // Render home.html
 console.log("⏳ Memulai render home.html...");
-renderHTML("penggantidirinya", "home.html").then(() => {
-    console.log("✅ home.html selesai dimuat.");
-}).catch(error => {
-    console.error("❌ Gagal memuat home.html:", error);
-});
+renderHTML("penggantidirinya", "home.html");
+
+// Tunggu sebentar sebelum mengambil data JSON (agar home.html sudah selesai dimuat)
+setTimeout(() => {
+    console.log("✅ home.html kemungkinan sudah selesai dimuat, mengambil data JSON...");
+    loadData();
+}, 1000); // Tunggu 1 detik agar HTML selesai dimuat
 
 // Fungsi untuk mengambil dan menampilkan data JSON
 function loadData() {
@@ -23,10 +25,10 @@ function loadData() {
         const data = response.data.card;
         console.log("🔹 Data yang digunakan:", data);
 
+        // Pastikan semua elemen sudah ada sebelum diisi
         setTimeout(() => {
             console.log("⏳ Memasukkan data ke dalam halaman...");
 
-            // Set avatar
             const avatarElem = document.getElementById("avatar");
             if (avatarElem) {
                 avatarElem.innerHTML = `
@@ -37,7 +39,6 @@ function loadData() {
                 console.warn("⚠️ Elemen avatar tidak ditemukan!");
             }
 
-            // Set nama dan pekerjaan
             const namaElem = document.getElementById("nama");
             const occupationElem = document.getElementById("occupation");
             if (namaElem && occupationElem) {
@@ -46,14 +47,12 @@ function loadData() {
                 console.log("✅ Nama dan pekerjaan diatur.");
             }
 
-            // Set quote
             const quoteElem = document.getElementById("quote");
             if (quoteElem) {
                 quoteElem.textContent = `"${data.details.skills.description || "No quote available"}"`;
                 console.log("✅ Quote diatur.");
             }
 
-            // Set about
             const aboutElem = document.getElementById("about");
             if (aboutElem) {
                 aboutElem.innerHTML = data.details.about
@@ -62,7 +61,6 @@ function loadData() {
                 console.log("✅ About section diatur.");
             }
 
-            // Set skillset
             const skillsElem = document.getElementById("skills");
             if (skillsElem) {
                 skillsElem.innerHTML = data.details.skills.list
@@ -71,7 +69,6 @@ function loadData() {
                 console.log("✅ Skillset diatur.");
             }
 
-            // Set harga dan rate
             const hargaElem = document.getElementById("harga");
             const rateElem = document.getElementById("rate");
             if (hargaElem && rateElem) {
@@ -80,7 +77,6 @@ function loadData() {
                 console.log("✅ Harga dan rate diatur.");
             }
 
-            // Set social links
             const socialLinksElem = document.getElementById("social-links");
             if (socialLinksElem) {
                 socialLinksElem.innerHTML = data.details.social_links
@@ -97,12 +93,9 @@ function loadData() {
                 console.warn("⚠️ CSS (style.css) mungkin belum dimuat.");
             }
 
-        }, 500);
+        }, 500); // Tunggu sebentar untuk memastikan elemen tersedia
     });
 }
-
-// Panggil fungsi loadData setelah renderHTML selesai
-setTimeout(loadData, 1000);
 
 // Fungsi untuk menampilkan modal gambar
 window.openModal = function (src) {
@@ -115,7 +108,6 @@ window.openModal = function (src) {
         modal.classList.add("active");
         console.log("✅ Modal ditampilkan.");
 
-        // Tutup modal saat klik di luar gambar
         modal.onclick = () => {
             modal.classList.remove("active");
             console.log("✅ Modal ditutup.");
