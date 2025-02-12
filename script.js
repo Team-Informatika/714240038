@@ -1,90 +1,66 @@
 import { renderHTML } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 
-// Fungsi untuk inisialisasi
-async function init() {
-    // Tunggu hingga home.html selesai dimuat
-    await renderHTML("penggantidirinya", "home.html");
+// Render halaman home.html ke dalam div dengan ID "penggantidirinya"
+renderHTML("penggantidirinya", "home.html");
 
-    console.log("home.html berhasil dimuat!");
+// Fungsi untuk mengambil data JSON
+function loadData() {
+    getJSON("https://t.if.co.id/json/nawal.json", null, null, function(response) {
+        if (!response || !response.card) {
+            console.error("Data JSON tidak valid!", response);
+            return;
+        }
 
-    // Setelah home.html dimuat, ambil data JSON
-    getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
+        const data = response.card;
+
+        // Tunggu hingga elemen dari home.html tersedia
+        setTimeout(() => {
+            // Set avatar
+            document.getElementById("avatar").innerHTML = `
+                <img src="${data.avatar.src}" alt="${data.avatar.alt}" onclick="openModal('${data.avatar.src}')">
+            `;
+
+            // Set nama dan pekerjaan
+            document.getElementById("nama").textContent = data.details.name;
+            document.getElementById("occupation").textContent = data.details.occupation;
+
+            // Set quote
+            document.getElementById("quote").textContent = `"${data.details.skills.description || "No quote available"}"`;
+
+            // Set about
+            document.getElementById("about").innerHTML = data.details.about
+                .map(item => `<p>${item.value}</p>`)
+                .join("");
+
+            // Set skillset
+            document.getElementById("skills").innerHTML = data.details.skills.list
+                .map(skill => `<li>${skill}</li>`)
+                .join("");
+
+            // Set harga dan rate
+            document.getElementById("harga").textContent = data.details.rate_day.price;
+            document.getElementById("rate").textContent = data.details.rate_day.rate;
+
+            // Set social links
+            document.getElementById("social-links").innerHTML = data.details.social_links
+                .map(link => `<a href="${link.url}" target="_blank">${link.platform}</a>`)
+                .join(" | ");
+        }, 500); // Delay untuk memastikan home.html telah dimuat
+    });
 }
 
-// Panggil fungsi init()
-init();
-
-// Fungsi untuk menangani data dari JSON
-function responseFunction(response) {
-    console.log("Data JSON diterima:", response);
-
-    // Pastikan JSON ada dan memiliki struktur yang benar
-    if (!response || !response.card) {
-        console.error("Data JSON tidak valid!", response);
-        return;
-    }
-
-    const data = response.card;
-
-    // Pastikan elemen HTML sudah ada sebelum mengisi datanya
-    const avatarEl = document.getElementById("avatar");
-    const namaEl = document.getElementById("nama");
-    const occupationEl = document.getElementById("occupation");
-    const quoteEl = document.getElementById("quote");
-    const aboutEl = document.getElementById("about");
-    const skillsEl = document.getElementById("skills");
-    const hargaEl = document.getElementById("harga");
-    const rateEl = document.getElementById("rate");
-    const socialLinksEl = document.getElementById("social-links");
-
-    if (!avatarEl || !namaEl || !occupationEl || !quoteEl || !aboutEl || !skillsEl || !hargaEl || !rateEl || !socialLinksEl) {
-        console.error("Elemen HTML belum termuat sepenuhnya!");
-        return;
-    }
-
-    // Set avatar
-    avatarEl.innerHTML = `
-        <img src="${data.avatar.src}" alt="${data.avatar.alt}" onclick="openModal('${data.avatar.src}')">
-    `;
-
-    // Set nama dan pekerjaan
-    namaEl.textContent = data.details.name;
-    occupationEl.textContent = data.details.occupation;
-
-    // Set quote
-    quoteEl.textContent = `"${data.details.skills.description}"`;
-
-    // Set about
-    aboutEl.innerHTML = data.details.about
-        .map(item => `<p>${item.value}</p>`)
-        .join("");
-
-    // Set skillset
-    skillsEl.innerHTML = data.details.skills.list
-        .map(skill => `<li>${skill}</li>`)
-        .join("");
-
-    // Set harga dan rate
-    hargaEl.textContent = data.details.rate_day.price;
-    rateEl.textContent = data.details.rate_day.rate;
-
-    // Set social links
-    socialLinksEl.innerHTML = data.details.social_links
-        .map(link => `<a href="${link.url}" target="_blank"><i class="${link.icon}"></i> ${link.platform}</a>`)
-        .join(" | ");
-}
+// Panggil fungsi loadData setelah renderHTML selesai
+setTimeout(loadData, 1000);
 
 // Fungsi untuk menampilkan modal gambar
 window.openModal = function (src) {
     const modal = document.getElementById("modal");
     const modalImage = document.getElementById("modalImage");
 
-    if (modal && modalImage) {
-        modalImage.src = src;
-        modal.classList.add("active");
+    modalImage.src = src;
+    modal.classList.add("active");
 
-        // Tutup modal saat klik di luar gambar
-        modal.onclick = () => modal.classList.remove("active");
-    }
+    // Tutup modal saat klik di luar gambar
+    modal.onclick = () => modal.classList.remove("active");
 };
