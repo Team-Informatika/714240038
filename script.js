@@ -1,20 +1,19 @@
 import { renderHTML } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 
-// Render halaman home.html ke dalam div dengan ID "penggantidirinya"
+// Render home.html
 renderHTML("penggantidirinya", "home.html");
 
-// Fungsi untuk mengambil data JSON
+// Fungsi untuk mengambil dan menampilkan data JSON
 function loadData() {
     getJSON("https://t.if.co.id/json/nawal.json", null, null, function(response) {
-        if (!response || !response.card) {
+        if (!response || !response.data || !response.data.card) {
             console.error("Data JSON tidak valid!", response);
             return;
         }
 
-        const data = response.card;
+        const data = response.data.card; // Mengakses data dari response.data.card
 
-        // Tunggu hingga elemen dari home.html tersedia
         setTimeout(() => {
             // Set avatar
             document.getElementById("avatar").innerHTML = `
@@ -46,7 +45,7 @@ function loadData() {
             document.getElementById("social-links").innerHTML = data.details.social_links
                 .map(link => `<a href="${link.url}" target="_blank">${link.platform}</a>`)
                 .join(" | ");
-        }, 500); // Delay untuk memastikan home.html telah dimuat
+        }, 500);
     });
 }
 
