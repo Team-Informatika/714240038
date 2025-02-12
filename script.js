@@ -1,11 +1,27 @@
 import { renderHTML, onClick, setInner } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 
-// Render halaman
-renderHTML("content", "home.html");
+// Render halaman home.html lalu jalankan inisialisasi
+renderHTML("content", "home.html").then(() => {
+    // Setelah home.html selesai dimuat, jalankan fungsi init
+    init();
+});
 
-// Ambil data dari JSON
-getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
+// Fungsi inisialisasi setelah home.html dimuat
+function init() {
+    // Ambil data dari JSON
+    getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
+
+    // Event listener modal (harus setelah home.html termuat)
+    const modal = document.getElementById("modal");
+    if (modal) {
+        modal.addEventListener("click", function (event) {
+            if (event.target === this) {
+                this.classList.remove("active");
+            }
+        });
+    }
+}
 
 // Fungsi untuk menangani data dari JSON
 function responseFunction(response) {
@@ -48,16 +64,11 @@ window.openModal = function (src) {
     const modal = document.getElementById("modal");
     const modalImage = document.getElementById("modalImage");
 
-    modalImage.src = src;
-    modal.classList.add("active");
-};
-
-// Tutup modal saat klik di luar gambar
-document.getElementById("modal").addEventListener("click", function (event) {
-    if (event.target === this) {
-        this.classList.remove("active");
+    if (modal && modalImage) {
+        modalImage.src = src;
+        modal.classList.add("active");
     }
-});
+};
 
 // Event listeners untuk social media
 onClick("github", () => window.open('https://github.com/nawal886', '_blank'));
