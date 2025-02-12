@@ -19,7 +19,7 @@ import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 import { renderHTML } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 
 // Render halaman
-renderHTML("root", "home.html");
+renderHTML("pengganti dirinya", "home.html");
 
 // Ambil data dari JSON
 getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
