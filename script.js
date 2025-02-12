@@ -24,62 +24,60 @@ renderHTML("pengganti dirinya", "home.html");
 // Ambil data dari JSON
 getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
 
-function responseFunction(response) {
-    const data = response.data.card;
+// Fungsi untuk mengambil JSON dari URL
+async function getJSON(url, _, __, callback) {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    callback(data);
+  } catch (error) {
+    console.error("Gagal mengambil data JSON:", error);
+  }
+}
 
-    document.addEventListener("DOMContentLoaded", function () {
-        // Render avatar dengan event untuk modal
-        const avatarHTML = `<img src="${data.card.avatar.src}" alt="${data.card.avatar.alt}" onclick="openModal('${data.card.avatar.src}')">`;
-        document.getElementById("avatar").innerHTML = avatarHTML;
-      
-        // Render nama
-        document.getElementById("nama").textContent = data.card.details.name;
-      
-        // Render occupation
-        document.getElementById("occupation").textContent = data.card.details.occupation;
-      
-        // Render quote
-        const quote = data.card.details.skills.description || "No quote available";
-        document.getElementById("quote").textContent = `"${quote}"`;
-      
-        // Render about
-        const aboutHTML = data.card.details.about
-          .map((item) => `<p>${item.value}</p>`)
-          .join("");
-        document.getElementById("about").innerHTML = aboutHTML;
-      
-        // Render skills
-        const skillsHTML = data.card.details.skills.list
-          .map((skill) => `<li>${skill}</li>`)
-          .join("");
-        document.getElementById("skills").innerHTML = skillsHTML;
-      
-        // Render hourly rate
-        document.getElementById("harga").textContent = data.card.details.rate_day.price;
-        document.getElementById("rate").textContent = data.card.details.rate_day.rate;
-      
-        // Render social links
-        const socialLinksHTML = data.card.details.social_links
-          .map(
-            (link) =>
-              `<a href="${link.url}" target="_blank"><i class="${link.icon}"></i> ${link.platform}</a>`
-          )
-          .join(" | ");
-        document.getElementById("social-links").innerHTML = socialLinksHTML;
-      });
-      
-      // Fungsi untuk membuka modal
-      function openModal(src) {
-        const modal = document.getElementById("modal");
-        const modalImage = document.getElementById("modalImage");
-      
-        modalImage.src = src;
-        modal.classList.add("active");
-      
-        // Tutup modal saat pengguna mengklik di luar gambar
-        modal.addEventListener("click", () => {
-          modal.classList.remove("active");
-          modalImage.src = ""; // Kosongkan src untuk menghindari cache
-        });
-      }
-      
+// Fungsi untuk menangani data dari JSON
+function responseFunction(response) {
+  const data = response.data.card;
+
+  // Render avatar dengan event untuk modal
+  document.getElementById("avatar").innerHTML = `
+    <img src="${data.avatar.src}" alt="${data.avatar.alt}" onclick="openModal('${data.avatar.src}')">
+  `;
+
+  // Render nama & occupation
+  document.getElementById("nama").textContent = data.details.name;
+  document.getElementById("occupation").textContent = data.details.occupation;
+
+  // Render quote
+  document.getElementById("quote").textContent = `"${data.details.skills.description || "No quote available"}"`;
+
+  // Render about
+  document.getElementById("about").innerHTML = data.details.about
+    .map(item => `<p>${item.value}</p>`)
+    .join("");
+
+  // Render skills
+  document.getElementById("skills").innerHTML = data.details.skills.list
+    .map(skill => `<li>${skill}</li>`)
+    .join("");
+
+  // Render hourly rate
+  document.getElementById("harga").textContent = data.details.rate_day.price;
+  document.getElementById("rate").textContent = data.details.rate_day.rate;
+
+  // Render social links
+  document.getElementById("social-links").innerHTML = data.details.social_links
+    .map(link => `<a href="${link.url}" target="_blank">${link.platform}</a>`)
+    .join(" | ");
+}
+
+// Fungsi untuk membuka modal gambar
+function openModal(src) {
+  const modal = document.getElementById("modal");
+  const modalImage = document.getElementById("modalImage");
+
+  modalImage.src = src;
+  modal.classList.add("active");
+
+  // Tutup modal saat klik di luar gambar
+  modal.onclick = (event) =>
