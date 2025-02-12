@@ -2,7 +2,7 @@ import { renderHTML, onClick, setInner } from "https://cdn.jsdelivr.net/gh/jscro
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 
 // Render halaman home.html terlebih dahulu
-renderHTML("pengganti_dirinya", "home.html").then(() => {
+renderHTML("penggantidirinya", "home.html").then(() => {
     // Setelah home.html selesai dimuat, ambil data JSON
     getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
 });
