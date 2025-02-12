@@ -1,34 +1,15 @@
-import { renderHTML, onClick, setInner } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
-import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
-
-async function loadPage() {
-    try {
-        // Pastikan elemen ID "penggantidirinya" ada di HTML sebelum render
-        if (!document.getElementById("penggantidirinya")) {
-            console.error("Elemen #penggantidirinya tidak ditemukan di HTML!");
-            return;
-        }
-
-        // Render halaman home.html
-        await renderHTML("penggantidirinya", "home.html"); // Menunggu hingga selesai
-
-        // Ambil data JSON setelah home.html selesai dimuat
-        getJSON("https://t.if.co.id/json/nawal.json", null, null, responseFunction);
-    } catch (error) {
-        console.error("Gagal memuat halaman atau JSON:", error);
-    }
-}
-
-// Fungsi untuk menangani data dari JSON
 function responseFunction(response) {
-    if (!response || !response.card) {
+    console.log("Data JSON diterima:", response); // Debugging: Cek struktur JSON
+
+    // Pastikan respons memiliki data yang benar
+    if (!response || !response.data || !response.data.card) {
         console.error("Data JSON tidak valid!", response);
         return;
     }
-    
-    const data = response.card;
 
-    // Pastikan semua elemen ada sebelum mengubah kontennya
+    const data = response.data.card; // Ambil data dari response.data.card
+
+    // Pastikan elemen sudah ada sebelum memodifikasi
     const avatarEl = document.getElementById("avatar");
     const namaEl = document.getElementById("nama");
     const occupationEl = document.getElementById("occupation");
@@ -67,23 +48,3 @@ function responseFunction(response) {
     // Set social links
     socialLinksEl.innerHTML = data.details.social_links.map(link => `<a href="${link.url}" target="_blank">${link.platform}</a>`).join(" | ");
 }
-
-// Fungsi untuk menampilkan modal gambar
-window.openModal = function (src) {
-    const modal = document.getElementById("modal");
-    const modalImage = document.getElementById("modalImage");
-
-    if (!modal || !modalImage) {
-        console.error("Elemen modal tidak ditemukan!");
-        return;
-    }
-
-    modalImage.src = src;
-    modal.classList.add("active");
-
-    // Tutup modal saat klik di luar gambar
-    modal.onclick = () => modal.classList.remove("active");
-};
-
-// Jalankan fungsi utama setelah halaman dimuat
-document.addEventListener("DOMContentLoaded", loadPage);
