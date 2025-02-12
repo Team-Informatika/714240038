@@ -59,3 +59,4 @@ window.openModal = function (src) {
     // Tutup modal saat klik di luar gambar
     modal.onclick = () => modal.classList.remove("active");
 };
+
