@@ -15,12 +15,15 @@ body {
 }
 
 #avatar img {
-    width: 150px;
-    height: 150px;
+    width: 200px; /* Sesuaikan ukuran */
+    height: 200px;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: cover; /* Memastikan gambar tidak terdistorsi */
+    object-position: center; /* Memotong bagian tengah gambar */
+    aspect-ratio: 1 / 1; /* Menjaga rasio persegi */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
+
 
 h2 {
     font-size: 24px;
